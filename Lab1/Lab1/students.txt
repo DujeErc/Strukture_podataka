@@ -1,2 +1,2 @@
-1 Duje Ercegovic 12
-2 Antonio Celic 23
+﻿Duje Ercegovic 66
+Antonio Colic 52

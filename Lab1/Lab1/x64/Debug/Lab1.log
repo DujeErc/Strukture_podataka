@@ -1,2 +1,6 @@
 ﻿  Lab1.c
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\Lab1\Lab1\Lab1.c(64,13): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 3 has type 'double *'
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\Lab1\Lab1\Lab1.c(77,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\Lab1\Lab1\Lab1.c(87,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 3 has type 'double'
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\Lab1\Lab1\Lab1.c(114,32): warning C4020: 'PrintStudents': too many actual parameters
   Lab1.vcxproj -> C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\Lab1\x64\Debug\Lab1.exe
