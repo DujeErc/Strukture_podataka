@@ -22,7 +22,7 @@ Position findLast(Position head) {
 	while (current->next != NULL) {
 		current = current->next;
 	}
-	return current;
+	return current; //
 }
 
 int addToEndOfTheList(Position head) {
