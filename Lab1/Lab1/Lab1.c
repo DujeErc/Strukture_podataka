@@ -17,7 +17,7 @@ relatvan_br_bodova = br_bodova/max_br_bodova*100
 #define EXIT_SUCCESS 0
 #define MAX_LINE 1024
 #define MAX_SIZE 50
-#define max_br_bodova 100
+#define max_br_bodova 120
 
 typedef struct _student{
 	char name[MAX_SIZE];
@@ -61,7 +61,7 @@ int EnterStudents(int number, Student* s)
 	}
 
 	for (i = 0; i < number; i++)
-		fscanf(f, "%s %s %d", (s + i)->name, (s + i)->surname, &(s + i)->score);
+		fscanf(f, "%s %s %lf", (s + i)->name, (s + i)->surname, &(s + i)->score);
 
 	fclose(f);
 	return EXIT_SUCCESS;
@@ -84,7 +84,7 @@ int PrintStudents(int number, Student* s)
 {
 	int i;
 	for (i = 0; i < number; i++)
-		printf("Student: %s %s\nAbsolutely score %d\nRelative score: %f\n", (s + i)->name, (s + i)->surname, (s + i)->score, ((double)(s + i)->score / max_br_bodova) * 100);
+		printf("Student: %s %s\nAbsolutely score %.2lf\nRelative score: %lf\n", (s + i)->name, (s + i)->surname, (s + i)->score, (double)((s + i)->score / max_br_bodova) * 100);
 	return EXIT_SUCCESS;
 }
 
