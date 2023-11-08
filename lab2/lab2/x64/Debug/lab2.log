@@ -1,3 +1,4 @@
 ﻿  lab2.c
-C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab2\lab2\lab2.c(209): warning C4715: 'menu': not all control paths return a value
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab2\lab2\lab2.c(120,35): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab2\lab2\lab2.c(237,10): warning C4566: character represented by universal-character-name '\u0111' cannot be represented in the current code page (1252)
   lab2.vcxproj -> C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab2\x64\Debug\lab2.exe

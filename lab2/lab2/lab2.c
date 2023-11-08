@@ -1,209 +1,341 @@
-﻿/*2. Definirati strukturu osoba (ime, prezime, godina rođenja) i napisati program koji:
-A. dinamički dodaje novi element na početak liste,
-B. ispisuje listu,
-C. dinamički dodaje novi element na kraj liste,
-D. pronalazi element u listi (po prezimenu),
-E. briše određeni element iz liste,
-U zadatku se ne smiju koristiti globalne varijable.
-*/
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdlib.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define MAX_STRING (64)
-#define MAX_LINE (1024)
-#define ERROR_MESSAGE (-1)
+#define MAX_LENGHT 50
+#define MEMORY_ALLOCATION_ERROR -1
+#define ERROR_EXIT -1
 
-struct person;
+struct Osoba;
 
-typedef struct person {
-    char name[MAX_STRING];
-    char surname[MAX_STRING];
-    int byear;
-    struct person* next;
-}person;
+typedef struct Osoba* Position;
 
-void insert_beggining(person* currentPerson);
-void insert_in_struct(person* forInsert);
-void printList(person* forPrint);
-void insert_end(person* currentPerson);
-person* find_person(person* inputStruct, char* input);
-person* find_before(person* inputStruct, char* input);
-void delete_person(person* inputPerson);
-int menu();
+typedef struct Osoba {
+
+	char name[MAX_LENGHT];
+	char surname[MAX_LENGHT];
+	int year;
+	Position Next;
+
+}osoba;
+
+int UnosPodataka(Position);
+
+int UnosP(Position);
+
+int Ispis(Position);
+
+int UnosK(Position);
+
+int UnosIza(Position);
+
+int UnosIspred(Position);
+
+int Brisi_Osobu(Position);
+
+Position Pronadji(Position);
+
+Position PronadjiPret(Position, char*);
+
+Position PronadjiPret(Position, char*);
+
+int UnosPodataka(Position q)
+{
+	printf("Unesite ime korisnika:\n");
+	scanf(" %s", q->name);
+	printf("Unesite prezime korisnika:\n");
+	scanf(" %s", q->surname);
+	printf("Unesite godinu rodenja korisnika:\n");
+	scanf("%d", &q->year);
+
+	return 0;
+}
+
+int UnosP(Position P) {
+
+	Position q = NULL;
+
+	q = (Position)malloc(sizeof(osoba));
+
+	if (q == NULL) {
+		printf("Neuspjelo alociranje memorije!\n");
+		return MEMORY_ALLOCATION_ERROR;
+	}
+
+	UnosPodataka(q);
+
+	q->Next = P->Next;
+	P->Next = q;
+
+	return 0;
+
+}
+
+int Ispis(Position P) {
+
+	printf("\n----------\n");
+
+	while (P != NULL) {
+
+		printf("\n - %s - %s - %d", P->name, P->surname, P->year);
+		P = P->Next;
+	}
+
+	return 0;
+}
+
+int UnosK(Position P) {
+
+	Position q = NULL;
+
+	q = (Position)malloc(sizeof(osoba));
+	if (q == NULL) {
+		printf("Neuspjelo alociranje memorije!\n");
+		return MEMORY_ALLOCATION_ERROR;
+	}
+
+	UnosPodataka(q);
+
+	while (P->Next != NULL)
+		P = P->Next;
+
+	q->Next = P->Next;
+	P->Next = q;
+
+
+	return 0;
+}
+
+Position Pronadji(Position P) {
+	char surname[MAX_LENGHT] = { 0 };
+	int i = 1;
+
+	printf("\nUnesite prezime\n");
+	scanf(" %s", surname);
+
+	while (P != NULL && strcmp(P->surname, surname)) {
+
+		if (strcmp(P->surname, surname) == NULL);
+		i++;
+
+		P = P->Next;
+	}
+
+	if (P == NULL) {
+		printf("\nOsoba ne postoji");
+		return NULL;
+	}
+
+	printf("\nOSOBA -> %s %s %d\n", P->name, P->surname, P->year);
+
+	return P;
+}
+
+Position Pronadji_za_UnosIza(Position P, char* surname) {
+
+	while (P != NULL && strcmp(P->surname, surname)) {
+		P = P->Next;
+	}
+
+	if (P == NULL) {
+		printf("\nOsoba ne postoji");
+		return NULL;
+	}
+
+	return P;
+}
+
+Position PronadjiPret(Position P, char* surname) {
+
+	Position before = P;
+
+	P = P->Next;
+
+	while (P != NULL && strcmp(P->surname, surname)) {
+
+		before = before->Next;
+		P = P->Next;
+	}
+
+	if (P == NULL) {
+		printf("\nOsoba ne postoji");
+		return NULL;
+	}
+
+	else
+		return before;
+}
+
+int Brisi_Osobu(Position P) {
+
+	Position before, q;
+	char surname[MAX_LENGHT] = { 0 };
+
+	printf("\nUnesite prezime\n");
+	scanf(" %s", surname);
+
+	before = PronadjiPret(P, surname);
+
+	if (before == NULL) {
+		printf("Nema prethodnika, ne moze obrisat");
+		return ERROR_EXIT;
+	}
+
+	q = before->Next;
+	before->Next = q->Next;
+
+	free(q);
+
+	return 0;
+}
+
+int UnosIza(Position P) {
+
+	Position q = NULL;
+
+	char surname[MAX_LENGHT] = { 0 };
+
+	q = (Position)malloc(sizeof(osoba));
+
+	if (q == NULL) {
+		printf("Neuspjelo alociranje memorije!\n");
+		return MEMORY_ALLOCATION_ERROR;
+	}
+
+	printf("\nUnesite prezime osobe iza koje zelite dodati novu osobu\n");
+	scanf(" %s", surname);
+
+	P = Pronadji_za_UnosIza(P, surname);
+
+	printf("\n---Unesite Osobu koju zelite dodati---\n");
+	UnosPodataka(q);
+
+	q->Next = P->Next;
+	P->Next = q;
+
+	return 0;
+}
+
+int UnosIspred(Position P) {
+
+	Position q = NULL;
+	char surname[MAX_LENGHT] = { 0 };
+
+	q = (Position)malloc(sizeof(osoba));
+
+	if (q == NULL) {
+		printf("Neuspjelo alociranje memorije!\n");
+		return MEMORY_ALLOCATION_ERROR;
+	}
+
+	printf("\nUnesite prezime ispred koje zelite dodati novu osobu\n");
+	scanf(" %s", surname);
+
+	if (P == NULL) {
+		printf("Osoba sa prezimenom %s nije pronađena.\n", surname);
+		free(q);
+		return ERROR_EXIT;
+	}
+
+	P = PronadjiPret(P, surname);
+
+	printf("\n---Unesite osobu koju zelite dodati---\n");
+	UnosPodataka(q);
+
+	q->Next = P->Next;
+	P->Next = q;
+
+	return 0;
+}
+
+void OslobodiMemoriju(Position P) {
+	while (P->Next != NULL)
+	{
+		Position temp = P->Next;
+		P->Next = temp->Next;
+		free(temp);
+	}
+
+	free(P);
+}
+
 int main() {
-    person head = { .name = "", .surname = "", .byear = 0, .next = NULL };
 
-    int choice = 0;
-    char surname[MAX_STRING] = { 0 };
+	Position Head;
+	char insert = 0;
+	char surname[MAX_LENGHT] = { 0 };
 
+	Head = NULL;
 
+	Head = (Position)malloc(sizeof(osoba));
 
-    while (1) {
+	if (Head == NULL)
+	{
+		printf("Alokacija memorije nije uspjesna.\n");
+		return MEMORY_ALLOCATION_ERROR;
+	}
 
-        choice = menu();
-
-        switch (choice) {
-
-        case 0:
-            return 0;
-        case 1:
-            insert_beggining(&head);
-            break;
-        case 2:
-            printList(head.next);
-            break;
-        case 3:
-            insert_end(&head);
-            break;
-
-        case 4:
-            printf("Unesite prezime trazene osobe: \n");
-            scanf(" %s", surname);
-            find_person(&head, surname);
-            break;
-
-        case 5:
-            delete_person(&head);
-            break;
-
-        default:
-            printf("Pogreska!\n");
-        }
-    }
-
-    return 0;
-}
-void insert_beggining(person* currentPerson) {
-
-    person* newPerson = NULL;
-
-    newPerson = malloc(sizeof(person));
-
-    if (!newPerson) {
-        printf("Memorija neuspješno alocirana!\n");
-        free(newPerson);
-        return;
-    }
-
-    insert_in_struct(newPerson);
-
-    newPerson->next = currentPerson->next;
-    currentPerson->next = newPerson;
+	Head->Next = NULL;
 
 
-    return;
-}
-void insert_in_struct(person* forInsert) {
+	while (insert != 'z') {
+		printf("\nUnesite izbor");
+		printf("\nz -> Zavrsetak programa");
+		printf("\n1 -> Dodavanje osobe na pocetak liste");
+		printf("\n2 -> Ispis Liste");
+		printf("\n3 -> Dodavanje na kraj liste");
+		printf("\n4 -> Trazenje po prezimenu");
+		printf("\n5 -> Brisanje odredjene osobe");
+		printf("\n6 -> Unos iza osobe u listi");
+		printf("\n7 -> Unos ispred osobe u listi");
 
-    printf("Unesi ime nove osobe: \n");
-    scanf(" %s", forInsert->name);
+		printf("\nIzbor -> ");
 
-    printf("Unesi prezime nove osobe:\n");
-    scanf(" %s", forInsert->surname);
+		scanf(" %c", &insert);
 
-    printf("Unesi godiste nove osobe: \n");
-    scanf("%d", &forInsert->byear);
+		switch (insert) {
+		case 'z':
+			printf("\nZavrsetak programa");
+			break;
 
-}
-void printList(person* forPrint) {
+		case '1':
+			UnosP(Head);
+			break;
 
-    if (forPrint == NULL) {
-        printf("Lista je prazna!\n");
-    }
+		case '2':
+			Ispis(Head->Next);
+			break;
 
-    while (forPrint != NULL) {
-        printf(" %s %s %d\n", forPrint->name, forPrint->surname, forPrint->byear);
-        forPrint = forPrint->next;
+		case '3':
+			UnosK(Head);
+			break;
 
-    }
-}
-void insert_end(person* currentPerson) {
-    person* temp = NULL;
+		case '4':
+			Pronadji(Head);
+			break;
 
-    temp = (person*)malloc(sizeof(person));
+		case '5':
+			Brisi_Osobu(Head);
+			break;
 
-    if (!temp) {
-        printf("Neuspjesno alociranje memorije!\n");
-        free(temp);
-        return;
-    }
-    while (currentPerson->next != NULL) {
-        currentPerson = currentPerson->next;
-    }
-    insert_in_struct(temp);
-    temp->next = currentPerson->next;
-    currentPerson->next = temp;
+		case '6':
+			UnosIza(Head);
+			break;
 
-    return;
-}
-person* find_person(person* inputStruct, char* input) {
-    person* temp = inputStruct;
+		case '7':
+			UnosIspred(Head);
+			break;
 
-    while (temp != NULL) {
-        if (strcmp(input, temp->surname) == 0) {
-            printf("%s %s %d\n", temp->name, temp->surname, temp->byear);
-            if (strcmp(temp->next->surname, input) == 0) {
-                printf("%s %s %d\n", temp->next->name, temp->next->surname, temp->next->byear); //pomoæ za trazenje osoba s jednakim prezimenima
-            }
-            return temp;
+		default:
+			printf("\nNE MOZE");
 
-        }
-        temp = temp->next;
-    }
-    if (temp == NULL)
-        printf("Lista je prazna!\n");
-    return NULL;
+		}
 
-    return NULL;
-}
-person* find_before(person* inputStruct, char* input) {
-    person* temp = NULL;
-    temp = inputStruct;
+	}
 
-    while (temp->next != NULL) {
-        if (strcmp(temp->next->surname, input) == 0)
-            return temp;
-        temp = temp->next;
-    }
-    if (temp->next == NULL)
-        printf("Osoba nije pronadena!\n");
+	OslobodiMemoriju(Head);
 
-    return NULL;
-}
-
-void delete_person(person* inputPerson) {
-    person* temp = NULL;
-    char lname[MAX_STRING] = { 0 };
-
-    printf("Unesite prezime osobe koju zelite izbrisati iz liste!\n");
-    scanf(" %s", lname);
-
-    temp = find_before(inputPerson, lname);
-
-    inputPerson = temp->next;
-    temp->next = inputPerson->next;
-
-    free(inputPerson);
-
-    return;
-}
-int menu() {
-    int choice = 0;
-
-
-    printf("\nIzbornik:\n"
-        "0 - izlaz\n"
-        "1 - Unos novog elementa na pocetak liste\n"
-        "2 - Ispis liste\n"
-        "3 - Unos novog elementa na kraj liste\n"
-        "4 - Pronalazak elemnta u listi (po prezimenu)\n"
-        "5 - Brisanje elementa iz liste\n");
-
-    scanf("%d", &choice);
-    if (choice >= 0 && choice <= 5)
-        return choice;
-    else
-        printf("Pogresan unos ponudene opcije, pokusajte ponovno.\n");
+	return 0;
 }
