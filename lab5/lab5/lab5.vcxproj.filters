@@ -15,13 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lab4.c">
+    <ClCompile Include="lab5.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="poly.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>
