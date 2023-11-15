@@ -47,18 +47,13 @@ int main(void)
 
 	if (prExp_ret)
 	{
-		// print the final result
+		// printa konacni rezultat
 		printf("Result = %d", result);
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
 }
 
-/**
-* Loads an expression from a file.
-* @param buffer		Variable in which to save the loaded expression.
-* @return			Returns true if completed successfully, otherwise false.
-*/
 bool loadFromFile(char* buffer)
 {
 	char filename[MAX_STR_LEN] = { 0 };
@@ -78,13 +73,7 @@ bool loadFromFile(char* buffer)
 	return true;
 }
 
-/**
-* Processes a mathematical expression.
-* @param expression	Expression which to process.
-* @param result		Variable in which to save the result.
-* @param head		Head of the list (stack) used for calculation.
-* @return			Returns true if completed successfully, otherwise false.
-*/
+//procesira matematicki izraz
 bool processExpression(char* expression, int* result, Node* head)
 {
 	int num = 0;
@@ -110,10 +99,10 @@ bool processExpression(char* expression, int* result, Node* head)
 		expression += numOfBytes;
 	}
 
-	// pop the final result
+	// popa konacni rezultat
 	pop(result, head);
 
-	// check whether the stack is empty
+	// provjerava jel stack prazan
 	if (head->next)
 	{
 		printf("ERROR: Invalid mathematical expression\n");
@@ -123,12 +112,7 @@ bool processExpression(char* expression, int* result, Node* head)
 	return true;
 }
 
-/**
-* Calculates a chosen mathematical operation.
-* @param operator	Specifies which mathematical operation to execute.
-* @param head		Head of the list (stack) used for calculation.
-* @return			Returns true if completed successfully, otherwise false.
-*/
+
 bool calculate(char operator, Node* head)
 {
 	int firstOperand = 0;
@@ -165,7 +149,7 @@ bool calculate(char operator, Node* head)
 		return false;
 	}
 
-	// push the result onto the stack
+	// pusha rezultat u stack
 	if (push(result, head))
 	{
 		return true;
@@ -177,12 +161,6 @@ bool calculate(char operator, Node* head)
 	}
 }
 
-/**
-* Pushes a number onto a stack.
-* @param num		Number to push onto a stack.
-* @param head		Head of the list (stack) on which to push.
-* @return			Returns true if completed successfully, otherwise false.
-*/
 bool push(int num, Node* head)
 {
 	Node* new = (Node*)malloc(sizeof(Node));
@@ -194,13 +172,7 @@ bool push(int num, Node* head)
 
 	return true;
 }
-
-/**
-* Pops a number from a stack.
-* @param num		Variable in which to save the popped number.
-* @param head		Head of the list (stack) from which to pop the number.
-* @return			Returns true if completed successfully, otherwise false.
-*/
+//popa broj iz stacka
 bool pop(int* num, Node* head)
 {
 	Node* popped = head->next;
@@ -208,8 +180,7 @@ bool pop(int* num, Node* head)
 	if (popped)
 	{
 		*num = popped->num;
-
-		// delete the popped node
+		//deleta popani node
 		head->next = head->next->next;
 		free(popped);
 
@@ -218,10 +189,7 @@ bool pop(int* num, Node* head)
 	return false;
 }
 
-/**
-* Deletes all nodes from the node provided onward.
-* @param n			Node from which to start deleting.
-*/
+
 void deleteAll(Node* n)
 {
 	Node* temp = NULL;
