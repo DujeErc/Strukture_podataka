@@ -1,0 +1,6 @@
+﻿  lab9.c
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab9\lab9\lab9.c(35,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab9\lab9\lab9.c(91,3): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab9\lab9\lab9.c(103): warning C4715: 'replace': not all control paths return a value
+C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab9\lab9\lab9.c(23): warning C4716: 'inorder': must return a value
+  lab9.vcxproj -> C:\Users\Duje\Desktop\DujeErcegovic-StrukturePodataka\Strukture_podataka\lab9\x64\Debug\lab9.exe
